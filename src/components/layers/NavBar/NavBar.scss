@@ -1,0 +1,62 @@
+@import '../../../styles/variables';
+.nav {
+  display: flex;
+  background-color: $bp-content-light;
+  padding: 0px 40px;
+  align-items: center;
+  color: white;
+
+  &__title{
+    font-size: 50px;
+    font-family: 'Lumanosimo', cursive;
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  }
+
+  &__list {
+    flex: auto;
+  }
+}
+
+.list {
+  margin-left: 40px;
+  &__wrapper {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+  }
+  &__el {
+    font-size: 30px;
+    cursor: pointer;
+    a {
+      text-decoration: none;
+      color: white;
+      transition: 0.3s;
+      &:hover{
+        color: $bp-back;
+      }
+    }
+  }
+}
+
+.user-block {
+  display: flex;
+  border-left: 1px solid $bp-content-dark;
+  padding-left: 20px;
+  height: 100%;
+  align-items: center;
+  &__name {
+    margin: 0;
+    padding: 0;
+    padding-left: 10px;
+    font-size: 20px;
+  }
+  &__avatar {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+  }
+}

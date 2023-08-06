@@ -1,0 +1,53 @@
+@import '../../styles/variables';
+@import '../../styles/animations';
+.auth {
+  &__name {
+    text-align: center;
+    font-size: 30px;
+    padding: 10px 0px;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    label {
+      margin-bottom: 3px;
+      font-size: 20px;
+    }
+  }
+  &__error {
+    margin-top: 2px;
+    color: red;
+    animation: shake 0.5s;
+  }
+  &__field {
+    height: 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid;
+    padding: 2.5px 0px 2.5px 10px;
+  }
+  &__actions {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px;
+  }
+  &__btn {
+    height: 40px;
+    min-width: 200px;
+    border-radius: 8px;
+    border: none;
+    // box-shadow: 4px 4px 50px black;
+    background-color: $bp-front;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    &:hover {
+      background-color: $bp-front_hover;
+    }
+  }
+  &__tabs {
+    display: flex;
+    justify-content: center;
+  }
+}

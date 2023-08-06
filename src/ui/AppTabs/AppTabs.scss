@@ -1,0 +1,20 @@
+@import '../../styles/variables';
+
+.tabs {
+  display: flex;
+  gap: 20px;
+  &__selection-line {
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    border-bottom: 2px solid $bp-content-dark;
+  }
+  &__value {
+    position: relative;
+    font-size: 22px;
+    cursor: pointer;
+    &_selected {
+      color: $bp-content-dark;
+    }
+  }
+}
