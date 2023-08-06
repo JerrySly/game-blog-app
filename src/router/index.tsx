@@ -4,7 +4,7 @@ import {createRoot} from 'react-dom/client';
 import App from '../App';
 
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
@@ -25,11 +25,3 @@ const router = createBrowserRouter([
     ]
   },
 ])
-
-const root = document.getElementById('root');
-
-if (root) {
-  createRoot(root).render(
-    <RouterProvider router={router} /> 
-  );
-}

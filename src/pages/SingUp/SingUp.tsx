@@ -7,6 +7,8 @@ import { AppButton } from '../../ui/AppButton/AppButton';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Navigate } from 'react-router';
+import { useAppSelector } from '../../hooks/custom-redux';
 
 interface IFormSingIn {
   email: string,
@@ -23,6 +25,9 @@ const singUpSchema = yup.object({
 type SingUpType = yup.InferType<typeof singUpSchema>
 
 export const SingUp = () => {
+
+  const auth = useAppSelector(state => state.auth.userIsAuth);
+
   let [dialog, setDialog] = useState(true);
   let tabsValues = ['SingIn', 'SingUp'];
   let [authMode, setAuthMode] = useState('SingIn');
@@ -54,14 +59,14 @@ export const SingUp = () => {
     resolver: yupResolver(singUpSchema)
   });
   const onSubmitIn: SubmitHandler<IFormSingIn> = data => {
-    console.log(data);
-    console.log(singInErrors);
     
   };
   const onSubmitUp: SubmitHandler<SingUpType> = data => console.log(data);
 
 
-
+  if (auth) {
+    return <Navigate  to={'/games'}/>
+  }
   return (
     <div className='wrapper'>
       {dialog ? <AppDialog onBlur={true} closeCallback={() => {setDialog(false)}}>
@@ -99,7 +104,6 @@ export const SingUp = () => {
           </form>
           }
       </AppDialog> : null }
-      
     </div>
   ) 
     
