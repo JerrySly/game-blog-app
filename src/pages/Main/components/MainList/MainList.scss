@@ -1,0 +1,14 @@
+.article-list {
+  margin: auto;
+  &_main {
+
+  }
+  &__item {
+    margin-bottom: 50px;
+  }
+  &_second {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+}

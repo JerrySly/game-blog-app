@@ -1,17 +1,16 @@
 @import '../../../styles/variables';
 .nav {
   display: flex;
-  background-color: $bp-content-light;
-  padding: 0px 40px;
+  padding: 20px 90px 0px;
   align-items: center;
-  color: white;
+  color: $bp-content-light;
 
   &__title{
     font-size: 50px;
     font-family: 'Lumanosimo', cursive;
     a {
       text-decoration: none;
-      color: white;
+      color: $bp-content-light;
     }
   }
 
@@ -25,6 +24,7 @@
   &__wrapper {
     display: flex;
     list-style: none;
+    justify-content: flex-end;
     gap: 40px;
   }
   &__el {
@@ -32,7 +32,7 @@
     cursor: pointer;
     a {
       text-decoration: none;
-      color: white;
+      color: $bp-content-light;
       transition: 0.3s;
       &:hover{
         color: $bp-back;

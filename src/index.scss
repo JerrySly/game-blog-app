@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lumanosimo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap');
+@import './styles/variables';
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, BlinkMacSystemFont, 'Lato', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -12,4 +14,24 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.app-btn {
+  &__common {
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: $bp-content-light;
+      color: white;
+      height: 40px;
+      width: 100%;
+      font-size: 20px;
+      font-family: 'Lato', sans-serif;
+      &:hover {
+        background-color: $bp-content-dark;
+      }
+  }
+}
+.page-wrapper {
+  margin: 50px 90px;
 }

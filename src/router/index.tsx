@@ -1,7 +1,8 @@
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import { SingUp } from '../pages/SingUp/SingUp';
-import {createRoot} from 'react-dom/client';
+import {createBrowserRouter} from 'react-router-dom';
 import App from '../App';
+import { Main } from '../pages/Main/Main';
+import { Admin } from '../pages/Admin/Admin';
+import { BlogCreate } from '../components/admin/BlogCreate/BlogCreate';
 
 
 export const router = createBrowserRouter([
@@ -10,11 +11,18 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: 'sing-up',
-        element: <SingUp />
+        path: '',
+        element: <Main />
       },
       {
-        path: 'games',
+        path: 'admin',
+        element: <Admin />,
+        children: [
+          {
+            path: 'create-blog',
+            element: <BlogCreate />
+          }
+        ]
       },
       {
         path: 'hobbies'

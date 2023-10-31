@@ -1,0 +1,22 @@
+@import '../../../styles/variables';
+
+.list {
+  &__item {
+    cursor: pointer;
+    &:hover {
+      background-color: $bp-middle;
+    }
+    &_selected {
+      background-color: $bp-front;
+      .item__text {
+        color: white;
+      }
+    }
+  }
+}
+.item {
+  &__text {
+    font-size: 24px;
+    color: $bp-content-dark;
+  }
+}

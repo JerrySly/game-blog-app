@@ -1,0 +1,55 @@
+.create {
+  &__name {
+    margin-bottom: 20px;
+  }
+  &__main-img {
+    margin-top: 20px;
+  }
+  &__hidden-input {
+    display: none;
+  }
+  &__actions {
+    display: flex;
+    margin-top: 20px;
+    button {
+      margin-right: 20px;
+    }
+  }
+}
+
+// lexical theme
+.ltr {
+  text-align: left;
+}
+
+.rtl {
+  text-align: right;
+}
+
+.editor-placeholder {
+  color: #999;
+  overflow: hidden;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.editor-paragraph {
+  margin: 0 0 15px 0;
+  position: relative;
+  height: 200px;
+  padding: 20px;
+  border: 1px solid black;
+}
+.img-block {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 24px;
+  img {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}

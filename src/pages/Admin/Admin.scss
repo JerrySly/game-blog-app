@@ -1,0 +1,19 @@
+@import '../../styles/variables';
+.admin {
+  &__page {
+    display: flex;
+  }
+  &__menu {
+    width: 100%;
+    max-width: 200px;
+    // border-right: 2px solid $bp-content-dark;
+    overflow-y: auto;
+    height: 100vh;
+    background-color: $bp-back;
+    box-shadow: 1px -1px 3px $bp-content-dark;
+  }
+  &__main {
+    padding: 10px 40px;
+    width: 100%;
+  }
+}

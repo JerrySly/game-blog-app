@@ -1,0 +1,25 @@
+@import '../../../styles/variables';
+
+.login {
+  display: flex;
+  margin: auto;
+  margin-top: 250px;
+  box-shadow: 1px 1px 8px $bp-content-dark;
+  flex-direction: column;
+  min-width: 400px;
+  left: calc(50% - 200px);
+  padding: 10px;
+  background: white;
+  z-index: 3;
+  position: absolute;
+  div {
+    margin-top: 10px;
+    &:first-child {
+      margin-top: 0px;
+    }
+  }
+  &__actions {
+    display: flex;
+    justify-content: center;
+  }
+}
