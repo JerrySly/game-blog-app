@@ -1,9 +1,9 @@
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { CommonProps } from "../../../common/props";
 import { Article } from "../../../store/articles/types";
 import "./ArticleCard.scss";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axios";
+import { useNavigate } from "react-router";
 
 
 interface ArticleCardProps {
@@ -14,20 +14,25 @@ interface ArticleCardProps {
 export const ArticleCard = (props: CommonProps & ArticleCardProps) => {
   
   const [mainImg, setMainImg] = useState();
+  const navigator = useNavigate();
+
 
   useEffect(() => {
-    console.log(props.article);
     axiosInstance.get(`image/${props.article.id}-${props.article.mainPicture}`).then(x => {
-      console.log(x.data);
       if (!x.data) return;
       setMainImg(x.data);
     })
   }, [])
 
+
+  const toFullVersion = () => {
+    navigator(`/article/${props.article.id}`);  
+  }
+
   return (
       <div className={`article ${props.short ? 'article_short' : '' } ${props.className}`}>
       <div className="article__img" >
-        <img src={mainImg} alt="" />
+        <img src={`${process.env.REACT_APP_IMG_PATH}/${props.article.uuid}-${props.article.mainPicture}`} alt="" />
       </div>
       <div className="article__info">
         <div className={`article__header ${props.short ? 'article__header_short' : ''}`}>{props.article.title}</div>
@@ -36,7 +41,7 @@ export const ArticleCard = (props: CommonProps & ArticleCardProps) => {
           dangerouslySetInnerHTML={{ __html: props.article.startText}}
         />
           <div className="article__action action">
-            <button className="app-btn__common">Читать</button>
+            <button className="app-btn__common" onClick={() => toFullVersion()}>Читать</button>
           </div>
         <div></div>
       </div>

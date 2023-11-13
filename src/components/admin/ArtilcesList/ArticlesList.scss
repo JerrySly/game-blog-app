@@ -1,0 +1,23 @@
+.table-pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    &__number {
+    }
+    &__number-block {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+    }
+    &__arrow {
+        &_disabled {
+            pointer-events: none;
+            cursor: none;
+        }
+    }
+}
+.search-block {
+    &__input {
+        width: 100%;
+    }
+}

@@ -9,11 +9,11 @@ export const AdminMenu = (props: CommonProps) => {
   const [items, setItems] = useState([
     {
       text: 'Create article',
-      route: 'create-blog',
+      route: 'create-article',
     },
     {
       text: 'Articles list',
-      component: 'articles-list',
+      route: 'articles-list',
     },
     {
       text: 'Users list',

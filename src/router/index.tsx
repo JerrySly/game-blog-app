@@ -2,7 +2,9 @@ import {createBrowserRouter} from 'react-router-dom';
 import App from '../App';
 import { Main } from '../pages/Main/Main';
 import { Admin } from '../pages/Admin/Admin';
-import { BlogCreate } from '../components/admin/BlogCreate/BlogCreate';
+import { Article } from '../pages/Article/Article';
+import { ArticleCreate } from '../components/admin/ArticleCreate/ArticleCreate';
+import { ArticlesList } from '../components/admin/ArtilcesList/ArticlesList';
 
 
 export const router = createBrowserRouter([
@@ -14,13 +16,25 @@ export const router = createBrowserRouter([
         path: '',
         element: <Main />
       },
+      { 
+        path: 'article/:id',
+        element: <Article />
+      },
       {
         path: 'admin',
         element: <Admin />,
         children: [
           {
-            path: 'create-blog',
-            element: <BlogCreate />
+            path: 'create-article',
+            element: <ArticleCreate />
+          },
+          {
+            path: 'edit-article/:uuid',
+            element: <ArticleCreate />
+          },
+          {
+            path:'articles-list',
+            element: <ArticlesList />
           }
         ]
       },
