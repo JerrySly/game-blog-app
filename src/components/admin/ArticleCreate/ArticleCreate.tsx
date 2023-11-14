@@ -16,6 +16,10 @@ import { Article } from '../../../store/articles/types';
 import {AiFillDelete} from 'react-icons/ai';
 import * as _ from 'lodash';
 
+const Size = Quill.import('attributors/style/size');
+Size.whitelist = ['14px', '16px', '18px', '20px', '24px', '30px'];
+Quill.register(Size, true);
+
 type ArticleCreateModel = {
   mainPicture: string;
   startText: string;
@@ -31,7 +35,7 @@ let prevUuid = v4();
 const modules = {
   toolbar: {
     container: [
-      [{ header: [1, 2, false] }],
+      [{ 'size': Size.whitelist }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
       [
         { list: 'ordered' },
@@ -63,7 +67,6 @@ const modules = {
 };
 
 export const ArticleCreate = () => {
-
 
   const [startText, setStartText] = useState('');
   const [mainText, setMainText] = useState('');
@@ -141,7 +144,7 @@ export const ArticleCreate = () => {
     } else {
       const model: Article = {
         ...editModel,
-        mainPicture: files?.[0]?.name ?? undefined,
+        mainPicture: files?.[0]?.name ?? '',
         mainText,
         startText,
         title,
@@ -161,9 +164,9 @@ export const ArticleCreate = () => {
     if (typeof imgObject === 'string') {
       const copy = _.cloneDeep({
         ...editModel,
-        mainPicture: '',
       });
-      setEditModel(copy); // проблема с изображением, надо его как-то обнулять
+      copy.mainPicture = '';
+      setEditModel(copy as Article); // проблема с изображением, надо его как-то обнулять
     } else {
       setFiles(files.filter(x => x.name !== imgObject.name));
     }
