@@ -5,6 +5,7 @@ import { Admin } from '../pages/Admin/Admin';
 import { Article } from '../pages/Article/Article';
 import { ArticleCreate } from '../components/admin/ArticleCreate/ArticleCreate';
 import { ArticlesList } from '../components/admin/ArtilcesList/ArticlesList';
+import { SingUp } from '../pages/SingUp/SingUp';
 
 
 export const router = createBrowserRouter([
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
       {
         path: '',
         element: <Main />
+      },
+      {
+        path: 'sing-up',
+        element: <SingUp />
       },
       { 
         path: 'article/:id',

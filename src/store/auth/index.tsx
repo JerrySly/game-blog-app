@@ -12,7 +12,7 @@ interface AuthReducer extends SliceCaseReducers<AuthState> {
 export const authSlice = createSlice<AuthState,AuthReducer, "auth">({
   name: 'auth',
   initialState: {
-    userIsAuth: true,
+    userIsAuth: false,
   },
   reducers: {
     setUserIsAuth: (state, action) => {
