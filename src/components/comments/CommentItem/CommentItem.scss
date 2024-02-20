@@ -1,0 +1,17 @@
+@import '../../../styles/variables';
+.comment {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.308);
+    border-radius: 8px;
+    padding: 10px 8px;
+    margin-top: 12px;
+    border: 1px solid $bp-content-light;
+    &__author {
+        font-size: 24px;
+        font-weight: 600;
+        // border-bottom: 1px solid gray;
+        padding-bottom: 10px;
+    }
+    &__text {
+        padding-top: 10px;
+    }
+}

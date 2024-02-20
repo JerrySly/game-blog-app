@@ -1,20 +1,20 @@
-import { Outlet, Route, useNavigate, redirect, Navigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import './App.css';
 import { NavBar } from './components/layers/NavBar/NavBar';
-import { useAppSelector } from './hooks/custom-redux';
-import { SingUp } from './pages/SingUp/SingUp';
 import { router } from './router';
+import { useAppDispatch, useAppSelector } from './hooks/custom-redux';
+
+const token = localStorage.getItem('token');
 
 function App() {
   
-  const authState = useAppSelector(state => state.auth.userIsAuth);
   const nav = useNavigate();
-  if (!authState) {
-    return  <>
-      <Navigate to={'sing-up'}/>
-      <SingUp />
-      </>
-  }
+  const dispatch = useAppDispatch();
+  // if (token) {
+  //   dispatch( { type: 'auth/setToken', payload: token});
+  //   dispatch( { type: 'auth/setUserInfo', payload: { token }});
+  // }
+
   if (router.state.location.pathname.includes('/admin')) {
     return (
       <div>
@@ -22,6 +22,7 @@ function App() {
       </div>
     );
   }
+
   return (
     <div>
       <NavBar />

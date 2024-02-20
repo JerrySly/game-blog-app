@@ -4,6 +4,7 @@
   padding: 20px 90px 0px;
   align-items: center;
   color: $bp-content-light;
+  justify-content: space-between;
 
   &__title{
     font-size: 50px;
@@ -16,6 +17,16 @@
 
   &__list {
     flex: auto;
+  }
+  &__user {
+    font-size: 25px;
+    color: $bp-content-light;
+  }
+  &__login {
+    color: $bp-content-light;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 25px;
   }
 }
 
@@ -41,22 +52,3 @@
   }
 }
 
-.user-block {
-  display: flex;
-  border-left: 1px solid $bp-content-dark;
-  padding-left: 20px;
-  height: 100%;
-  align-items: center;
-  &__name {
-    margin: 0;
-    padding: 0;
-    padding-left: 10px;
-    font-size: 20px;
-  }
-  &__avatar {
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    cursor: pointer;
-  }
-}

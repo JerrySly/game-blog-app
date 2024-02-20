@@ -6,12 +6,12 @@ import { router } from './router/index';
 import store from './store';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import process from 'process';
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 const root = document.getElementById('root');
+
 
 if (root) {
   createRoot(root).render(

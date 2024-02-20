@@ -16,9 +16,22 @@
     &__breadcrumbs {
         margin-bottom: 20px !important;
         font-size: 25px !important;
+        margin-left: 70px !important;
     }
     &__text {
         text-align: center;
+    }
+    &__comments-warning {
+        div {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 code {
