@@ -1,19 +1,28 @@
-import {SliceCaseReducers, createSlice} from '@reduxjs/toolkit'
+import {PayloadAction, SliceCaseReducers, createSlice} from '@reduxjs/toolkit'
+import * as jwt from 'jwt-decode';
 
 interface AuthState {
   token: String | null,
-  roleId: String | null,
-  nickname: String | null,
-  userUuid: String | null,
-  updateToken: String | null,
+  userInfo: UserInfo | null,
+  refreshToken: String | null,
+  prevAuthRoute: String | null,
+}
+
+type UserInfo = {
+  nickname: string,
+  uuid: string,
+  role: string,
 }
 
 interface AuthReducer extends SliceCaseReducers<AuthState> {
   setToken: (state: AuthState, action: {payload: any, type:string})=>void,
   setUserInfo: (state: AuthState, action: {payload: {
-    token: string | null,
+    nickname: string,
+    uuid: string,
+    role: string,
   }, type: string}) => void
-  setUpdateToken: (state: AuthState, action: {payload: any, type:string})=>void,
+  setRefreshToken: (state: AuthState, action: {payload: any, type:string})=>void,
+  setInfoFromToken: (state: AuthState, action: PayloadAction<string | null | undefined>)=>void,
 }
 
 const parseJWT = (token: string) => {
@@ -22,32 +31,50 @@ const parseJWT = (token: string) => {
   return JSON.parse(window.atob(info));
 }
 
-export const authSlice = createSlice<AuthState,AuthReducer, "auth">({
+export const authSlice = createSlice<AuthState, AuthReducer, "auth">({
   name: 'auth',
   initialState: {
     token: null,
-    roleId: null,
-    nickname: null,
-    userUuid: null,
-    updateToken: null,
+    userInfo: null,
+    refreshToken: null,
+    prevAuthRoute: null,
   },
   reducers: {
     setToken: (state, action) => {
       state.token = action.payload;
     },
-    setUpdateToken: (state, action) => {
-      state.updateToken = action.payload
+    setRefreshToken: (state, action) => {
+      state.refreshToken = action.payload
     },
     setUserInfo: (state, action) => {
-      if(action.payload.token) {
-        const info = parseJWT(action.payload.token);
-        state.roleId = info._role;
-        state.nickname = info._nickname;
-        state.userUuid = info._uuid;
+      if(action.payload) {
+        state.userInfo 
+        = {
+          ...action.payload,
+        }
+      }
+    },
+    setPrevAuthRoute: (state, action) => {
+      state.prevAuthRoute = action.payload;
+    },
+    setInfoFromToken: (state, action: PayloadAction<string | null | undefined>) => {
+      const token = action.payload;
+      if (token) {
+        state.token = token;
+        const info = jwt.jwtDecode(token)  as {
+          _name: string,
+          _role: string,
+          _uuid: string,
+        };
+        state.userInfo = {
+          nickname: info._name,
+          role: info._role,
+          uuid: info._uuid,
+        }
       }
     }
   }
 });
 
-export const {setToken, setUpdateToken, setUserInfo} = authSlice.actions;
+export const {setToken, setRefreshToken, setUserInfo, setPrevAuthRoute, setInfoFromToken} = authSlice.actions;
 export default authSlice.reducer;

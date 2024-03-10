@@ -14,7 +14,7 @@ interface CommentInputProps {
 export const CommentInput = (props: CommentInputProps) => {
 
   const [comment, setComment] = useState<string | undefined>(undefined);
-  const userUuid = useAppSelector(state => state.auth.userUuid);
+  const user = useAppSelector(state => state.auth.userInfo);
   const location = useLocation();
   
   const clear = () => {
@@ -22,7 +22,7 @@ export const CommentInput = (props: CommentInputProps) => {
   }
 
   const postComment = () => {
-    if (comment && userUuid) sendComment(comment, props.articleUuid , userUuid);
+    if (comment && user) sendComment(comment, props.articleUuid , user.uuid);
     clear();
   }
 

@@ -6,6 +6,24 @@
   color: $bp-content-light;
   justify-content: space-between;
 
+  &__menu {
+    flex: auto;
+    display: flex;
+    text-decoration: none;
+    list-style: none;
+  }
+  .menu {
+    &__item {
+      font-size: 20px;
+      flex: 1 auto auto;
+      max-width: 200px;
+      a {
+        text-decoration: none;
+        color: $bp-content-light;  
+      }
+    }
+  }
+
   &__title{
     font-size: 50px;
     font-family: 'Lumanosimo', cursive;
@@ -27,28 +45,6 @@
     cursor: pointer;
     text-decoration: none;
     font-size: 25px;
-  }
-}
-
-.list {
-  margin-left: 40px;
-  &__wrapper {
-    display: flex;
-    list-style: none;
-    justify-content: flex-end;
-    gap: 40px;
-  }
-  &__el {
-    font-size: 30px;
-    cursor: pointer;
-    a {
-      text-decoration: none;
-      color: $bp-content-light;
-      transition: 0.3s;
-      &:hover{
-        color: $bp-back;
-      }
-    }
   }
 }
 

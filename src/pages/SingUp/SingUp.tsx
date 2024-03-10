@@ -7,9 +7,9 @@ import { AppButton } from '../../ui/AppButton/AppButton';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../hooks/custom-redux';
-import { logIn, singUp as reg } from '../../api/user';
+import { deleteCookies, logIn, singUp as reg } from '../../api/user';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -30,8 +30,10 @@ type SingUpType = yup.InferType<typeof singUpSchema>
 export const SingUp = () => {
 
   const auth = useAppSelector(state => state.auth.token);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  
   let [dialog, setDialog] = useState(true);
   let tabsValues = ['SingIn', 'SingUp'];
   let [authMode, setAuthMode] = useState('SingIn');
@@ -57,19 +59,22 @@ export const SingUp = () => {
   const {handleSubmit: singInSubmit, register: singInRegister, formState: { errors: singInErrors }} = useForm<IFormSingIn>();
 
 
-  
-
-
   const {handleSubmit: singUpSubmit, register: singUpRegister, formState: { errors: singUpErrors }} = useForm<SingUpType>({
     resolver: yupResolver(singUpSchema)
   });
-  const onSubmitIn: SubmitHandler<IFormSingIn> = data => {
+
+  const onSubmitIn: SubmitHandler<IFormSingIn> = async data => {
+    await deleteCookies();
     logIn(data).then( data => {
       dispatch({ type: 'auth/setToken', payload: data.token});
       dispatch({ type: 'auth/setUserInfo', payload: {
-        token: data.token,
-      }});
+        nickname: data.nickname,
+        uuid: data.uuid,
+        role: data.role,
+      } });
+      dispatch({type: 'auth/setRefreshToken', payload: data.refreshToken});
       localStorage.setItem('token', data.token);
+      navigate('/');
     })
   };
   const onSubmitUp: SubmitHandler<Omit<SingUpType, 'confirmPassword'>> = data => {
@@ -83,13 +88,13 @@ export const SingUp = () => {
     });
   };
 
-
+  
   if (auth) {
     return <Navigate  to={'/'}/>
   }
   return (
     <div className='wrapper'>
-    <ToastContainer />
+      <ToastContainer />
       {dialog ? <AppDialog onBlur={true} closeCallback={() => {setDialog(false)}}>
         <AppTabs className='auth__tabs' values={tabsValues} onChange={changeTab} />
         <div className='auth__name'>{authMode}</div>

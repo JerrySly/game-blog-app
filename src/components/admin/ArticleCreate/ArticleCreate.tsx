@@ -11,7 +11,7 @@ import ImageUploader from "quill-image-uploader";
 import ImageResize from 'quill-image-resize-module-react';
 import { v4, validate } from "uuid";
 import { useLocation } from 'react-router';
-import article from '../../../api/article';
+import post from '../../../api/post';
 import { Article } from '../../../store/articles/types';
 import {AiFillDelete} from 'react-icons/ai';
 import * as _ from 'lodash';
@@ -101,7 +101,7 @@ export const ArticleCreate = () => {
     const arr = location.pathname.split('/');
     const articleUuid = arr[arr.length - 1];
     if(validate(articleUuid)) {
-      article.getArticle(articleUuid).then(data => {
+      post.getPost(articleUuid).then(data => {
         setEditModel(data);
         initEditData(data);
       })
@@ -138,7 +138,7 @@ export const ArticleCreate = () => {
         title,
         uuid: prevUuid,
       }
-      const result = (await axiosInstance.post('/article', model)).data;
+      const result = (await axiosInstance.post('/post', model)).data;
       saveFiles(result.id)
       clearForm();
     } else {
@@ -150,7 +150,7 @@ export const ArticleCreate = () => {
         title,
       }
       if (files?.[0]) saveFiles(editModel.id);
-      const result = (await axiosInstance.put(`/article/${editModel.uuid}`, model)).data;
+      const result = (await axiosInstance.put(`/post/${editModel.uuid}`, model)).data;
 
     }
   }
