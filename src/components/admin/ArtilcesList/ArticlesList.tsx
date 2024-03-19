@@ -48,8 +48,9 @@ export const ArticlesList = () => {
 
   const getPage = () => {
     axiosInstance
-      .get(`/article?page=${pageNumber}&amount=${amount}&search=${search}`)
+      .get(`/post?page=${pageNumber}&amount=${amount}&search=${search}`)
       .then((items) => {
+        console.log(items);
         setMeta(items.data.meta);
         setList(items.data.data.rows);
         setAllAmount(items.data.data.count);
@@ -62,9 +63,8 @@ export const ArticlesList = () => {
     item: Article,
     index: number
   ) => {
-    console.log(value, item);
     const result = (
-      await axiosInstance.put(`/article/hidden/${item.uuid}`, {
+      await axiosInstance.put(`/post/hidden/${item.uuid}`, {
         value,
       })
     ).data;
@@ -74,7 +74,7 @@ export const ArticlesList = () => {
   };
 
   const deleteArticle = (uuid: string) => {
-    axiosInstance.delete(`/article/${uuid}`).then((x) => {
+    axiosInstance.delete(`/post/${uuid}`).then((x) => {
       getPage();
     });
   };

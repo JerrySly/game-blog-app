@@ -11,14 +11,15 @@ import { useAppSelector } from "../../hooks/custom-redux";
 import { CommentList } from "../../components/comments/CommentList/CommentList";
 
 export const Article = (props: CommonProps) => {
-    const { id } = useParams();
+    const { uuid } = useParams();
     const [article, setArticle] = useState<ArticleType | undefined>();
     const navigator = useNavigate();
     const userIsAuth = useAppSelector(
         state => state.auth.token, 
     );
     useEffect(() => {
-        axiosInstance.get(`/article/${id}`).then(data => {
+        axiosInstance.get(`/post/${uuid}`).then(data => {
+            console.log(data);
             setArticle(data.data);
         })
     }, []);
@@ -34,9 +35,12 @@ export const Article = (props: CommonProps) => {
                 fontSize: '25px',
             }} >{article?.title}</Typography>
         </Breadcrumbs>
-        <img src={`${process.env.REACT_APP_IMG_PATH}/${article?.uuid}-${article?.mainPicture}`} alt="" className="article__img" />
+        { article ? 
+            <img src={`${process.env.REACT_APP_IMG_PATH}/${uuid}-${article?.photo}`} alt="" className="article__img" />
+            : null
+        }
         <h2 className="article__title">{article?.title}</h2>
-        <div className="article__text" dangerouslySetInnerHTML={{__html: article?.mainText ?? ''}} />
+        <div className="article__text" dangerouslySetInnerHTML={{__html: article?.text ?? ''}} />
         <Divider light />
         {
             userIsAuth && article ?  <CommentInput articleUuid={article?.uuid}/>

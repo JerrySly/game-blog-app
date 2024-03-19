@@ -11,12 +11,12 @@ export const MainList = (props: CommonProps & MainListI) => {
   return (
     <>
     <div className="article-list article-list_second">
-      {props.list.map((x) => 
+      {props.list.map((post) => 
       <ArticleCard
-        key={x.id}
+        key={post.uuid}
         className="article-list__item"
         short={true}
-        article={x} 
+        article={post} 
       />)}
     </div>
   </>

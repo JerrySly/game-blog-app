@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { AppDialog } from '../../ui/AppDialog/AppDialog';
 import './SingUp.scss';
 import { AppTabs } from '../../ui/AppTabs/AppTabs';
-import { AppInput } from '../../ui/AppInput/AppInput';
 import { AppButton } from '../../ui/AppButton/AppButton';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -12,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/custom-redux';
 import { deleteCookies, logIn, singUp as reg } from '../../api/user';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Dialog, TextField } from '@mui/material';
 
 interface IFormSingIn {
   email: string,
@@ -29,7 +28,7 @@ type SingUpType = yup.InferType<typeof singUpSchema>
 
 export const SingUp = () => {
 
-  const auth = useAppSelector(state => state.auth.token);
+  const auth = useAppSelector(state => state.auth.userInfo);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -45,10 +44,10 @@ export const SingUp = () => {
   })
 
 
-  const setFormProp = (prop: string, value: React.FormEvent<HTMLInputElement>) => {
+  const setFormProp = (prop: string, value: React.FormEvent<HTMLDivElement>) => {
     setForm({
       ...form,
-      [prop]: value.currentTarget.value,
+      [prop]: value.currentTarget.innerText,
     });
   }
 
@@ -80,57 +79,61 @@ export const SingUp = () => {
   const onSubmitUp: SubmitHandler<Omit<SingUpType, 'confirmPassword'>> = data => {
     reg(data).then(data => {
       console.log(data);
+      setAuthMode('SingIn');
     }).catch(err => {
-      if(err.response.status == 500) {
+      if(err.response.status === 500) {
         const notifyError = () => toast.error('User already exist exist');
         notifyError();
       }
     });
   };
 
+  const closeHandler = () => {
+    navigate('/');
+  }
+
   
-  if (auth) {
+  if (auth?.uuid) {
     return <Navigate  to={'/'}/>
   }
   return (
-    <div className='wrapper'>
-      <ToastContainer />
-      {dialog ? <AppDialog onBlur={true} closeCallback={() => {setDialog(false)}}>
+      <Dialog onClose={closeHandler} open={true}  fullWidth={true}>
+        <div className='dialog-window'>
         <AppTabs className='auth__tabs' values={tabsValues} onChange={changeTab} />
-        <div className='auth__name'>{authMode}</div>
-          { authMode === 'SingIn' ? 
-          <form className='auth__form' onSubmit={singInSubmit(onSubmitIn)}>
-            <label>Email</label>
-            <AppInput {...singInRegister('email', { required: true })} aria-invalid={singInErrors ? true : false} className='auth__field' type='email' onInput={(value) => {setFormProp('email', value)}}/>
-            {singInErrors.email?.type === 'required' && <p className='auth__error' role='alert'>Email is required</p>}
-            <label>Password</label>
-            <AppInput {...singInRegister('password', { required: true })} aria-invalid={singInErrors ? true : false} className='auth__field' type='password'  onInput={(value) => {setFormProp('password', value)}}/>
-            {singInErrors.password?.type === 'required' && <p className='auth__error' role='alert'>Password is required</p> }
-            <div className='auth__actions'>
-              <AppButton type='submit' className='auth__btn' >LogIn</AppButton>
-            </div>
-          </form>
-          :
-          <form className='auth__form' onSubmit={singUpSubmit(onSubmitUp)}>
-            <label>Email</label>
-            <AppInput {...singUpRegister('email')} className='auth__field' type='email'  onInput={(value) => {setFormProp('email', value)}}/>
-            <p className='auth__error'>{singUpErrors.email?.message}</p>
-            <label>NickName</label>
-            <AppInput {...singUpRegister('nickname')} className='auth__field'  onInput={(value) => {setFormProp('nickName', value)}}/>
-            <p className='auth__error'>{singUpErrors.nickname?.message}</p>
-            <label>Password</label>
-            <AppInput {...singUpRegister('password')} className='auth__field' type='password' onInput={(value) => {setFormProp('password', value)}}/>
-            <p className='auth__error'>{singUpErrors.password?.message}</p>
-            <label>Confirm password</label>
-            <AppInput {...singUpRegister('confirmPassword')} className='auth__field' type='password' onInput={(value) => {setFormProp('confirmPassword', value)}}/>
-            <p className='auth__error'>{singUpErrors.confirmPassword?.message}</p>
-            <div className='auth__actions'>
-              <AppButton type='submit' className='auth__btn'>Register</AppButton> 
-            </div>
-          </form>
-          }
-      </AppDialog> : null }
-    </div>
+          <div className='auth__name'>{authMode}</div>
+            { authMode === 'SingIn' ? 
+            <form className='auth__form' onSubmit={singInSubmit(onSubmitIn)}>
+              <label>Email</label>
+              <TextField {...singInRegister('email', { required: true })} aria-invalid={singInErrors ? true : false} className='auth__field' type='email' onInput={(value) => {setFormProp('email', value)}}/>
+              {singInErrors.email?.type === 'required' && <p className='auth__error' role='alert'>Email is required</p>}
+              <label>Password</label>
+              <TextField {...singInRegister('password', { required: true })} aria-invalid={singInErrors ? true : false} className='auth__field' type='password'  onInput={(value) => {setFormProp('password', value)}}/>
+              {singInErrors.password?.type === 'required' && <p className='auth__error' role='alert'>Password is required</p> }
+              <div className='auth__actions'>
+                <AppButton type='submit' className='auth__btn' >LogIn</AppButton>
+              </div>
+            </form>
+            :
+            <form className='auth__form' onSubmit={singUpSubmit(onSubmitUp)}>
+              <label>Email</label>
+              <TextField {...singUpRegister('email')} className='auth__field' type='email'  onInput={(value) => {setFormProp('email', value)}}/>
+              <p className='auth__error'>{singUpErrors.email?.message}</p>
+              <label>NickName</label>
+              <TextField {...singUpRegister('nickname')} className='auth__field'  onInput={(value) => {setFormProp('nickName', value)}}/>
+              <p className='auth__error'>{singUpErrors.nickname?.message}</p>
+              <label>Password</label>
+              <TextField {...singUpRegister('password')} className='auth__field' type='password' onInput={(value) => {setFormProp('password', value)}}/>
+              <p className='auth__error'>{singUpErrors.password?.message}</p>
+              <label>Confirm password</label>
+              <TextField {...singUpRegister('confirmPassword')} className='auth__field' type='password' onInput={(value) => {setFormProp('confirmPassword', value)}}/>
+              <p className='auth__error'>{singUpErrors.confirmPassword?.message}</p>
+              <div className='auth__actions'>
+                <AppButton type='submit' className='auth__btn'>Register</AppButton> 
+              </div>
+            </form>
+            }
+          </div>
+      </Dialog>
   ) 
     
 }

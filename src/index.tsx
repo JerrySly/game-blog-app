@@ -6,9 +6,6 @@ import { router } from './router/index';
 import store from './store';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { getAllRoles } from './api/role';
-import { setRoles } from './store/app';
-import { setInfoFromToken } from './store/auth';
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

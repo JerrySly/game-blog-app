@@ -1,20 +1,19 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import './App.css';
 import { NavBar } from './components/layers/NavBar/NavBar';
 import { router } from './router';
 import { useAppDispatch, useAppSelector } from './hooks/custom-redux';
 import { useEffect } from 'react';
 import { getAllRoles } from './api/role';
-import { setRoles } from './store/app';
-import { PrivateRoute } from './components/system/PrivateRoute';
-import { setInfoFromToken } from './store/auth';
 
 
 function App() {
   
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const roles = useAppSelector(state => state.app.roles);
+  const userInfo = useAppSelector(state => state.auth.userInfo);
 
   useEffect(() => {
     if (!roles?.length) { 
@@ -24,12 +23,14 @@ function App() {
           payload: data.data,
         });
       })
-
-      const token = localStorage.getItem('token');
-      dispatch({
-        type: 'auth/setInfoFromToken',
-        payload: token,
-      });
+    }
+    const token = localStorage.getItem('token');
+    dispatch({
+      type: 'auth/setInfoFromToken',
+      payload: token,
+    });
+    if(!token) {
+      navigate('/sing-up');
     }
   }, []);
 

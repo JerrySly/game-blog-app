@@ -1,12 +1,21 @@
 import { NavLink } from 'react-router-dom';
-import { useAppSelector } from '../../../hooks/custom-redux';
+import { useAppDispatch, useAppSelector } from '../../../hooks/custom-redux';
+import { IoMdExit } from "react-icons/io";
 import './NavBar.scss';
 
 export const NavBar = () => {
 
   const user = useAppSelector(state => state.auth.userInfo);
   const roles = useAppSelector(state => state.app.roles);
+  const dispatch = useAppDispatch();
   const isAdmin = roles.find(x => x.uuid === user?.role)?.name === 'admin';
+
+  const logout = () => {
+    dispatch({
+      type: 'auth/logout',
+    })
+    localStorage.removeItem('token');
+  }
 
   return (
     <div className="nav">
@@ -22,7 +31,10 @@ export const NavBar = () => {
       </ul>
       { user
       ? <div className="nav__user">
-          {user?.nickname}
+          <p>{user?.nickname}</p>
+          <div className='nav__exit' onClick={() => logout()}>
+            <IoMdExit />
+          </div>
         </div>  
       : <a href='/sing-up' className='nav__login'>
           Войти

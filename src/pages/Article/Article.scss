@@ -1,6 +1,6 @@
 .article {
     &__page-wrapper {
-        padding: 20px;
+        padding: 20px 90px 0px;
     }
     &__img {
         width: 100%;
@@ -16,7 +16,6 @@
     &__breadcrumbs {
         margin-bottom: 20px !important;
         font-size: 25px !important;
-        margin-left: 70px !important;
     }
     &__text {
         text-align: center;

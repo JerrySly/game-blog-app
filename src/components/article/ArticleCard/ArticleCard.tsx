@@ -18,21 +18,23 @@ export const ArticleCard = (props: CommonProps & ArticleCardProps) => {
 
 
   useEffect(() => {
-    axiosInstance.get(`image/${props.article.id}-${props.article.mainPicture}`).then(x => {
+    axiosInstance.get(`image/${props.article.id}-${props.article.photo}`).then(x => {
       if (!x.data) return;
       setMainImg(x.data);
+    }).catch(err => {
+      // console.log(err);
     })
   }, [])
 
 
   const toFullVersion = () => {
-    navigator(`/article/${props.article.id}`);  
+    navigator(`/article/${props.article.uuid}`);  
   }
 
   return (
       <div className={`article ${props.short ? 'article_short' : '' } ${props.className}`}>
       <div className="article__img" >
-        <img src={`${process.env.REACT_APP_IMG_PATH}/${props.article.uuid}-${props.article.mainPicture}`} alt="" />
+        <img src={`${process.env.REACT_APP_IMG_PATH}/${props.article.uuid}-${props.article.photo}`} alt="" />
       </div>
       <div className="article__info">
         <div className={`article__header ${props.short ? 'article__header_short' : ''}`}>{props.article.title}</div>

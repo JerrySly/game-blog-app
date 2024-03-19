@@ -13,12 +13,13 @@
     list-style: none;
   }
   .menu {
+    margin: 0;
+    margin-top: 10px;
     &__item {
-      font-size: 20px;
+      font-size: 24px;
       flex: 1 auto auto;
       max-width: 200px;
       a {
-        text-decoration: none;
         color: $bp-content-light;  
       }
     }
@@ -37,8 +38,19 @@
     flex: auto;
   }
   &__user {
+    display: flex;
+    align-items: center;
     font-size: 25px;
     color: $bp-content-light;
+    margin-top: 10px;
+    p {
+      padding-bottom: 5px;
+      padding-right: 10px;
+      margin: 0;
+    }
+  }
+  &__exit {
+    cursor: pointer;
   }
   &__login {
     color: $bp-content-light;

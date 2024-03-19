@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { jwtDecode } from "jwt-decode";
+import { redirect } from "react-router";
+
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: 'http://localhost:8000/',
@@ -17,13 +19,20 @@ axiosInstance.interceptors.request.use(async (request) => {
       _uuid: string,
     } = jwtDecode(token as string);
     if (!decodedToken.exp) return request;
-    if(Date.now() > decodedToken.exp * 1000) {
-      const newToken = (await axiosInstance.get(`/auth/refresh/${decodedToken?._uuid}`, {
-        withCredentials: true,
-      })).data;
-      localStorage.removeItem('token');
-      localStorage.setItem('token', newToken);
-      request.headers.Authorization = newToken;
+    if((Date.now() > decodedToken.exp * 1000) && decodedToken?._uuid) {
+      try {
+        const newToken = (await axiosInstance.get(`/auth/refresh/${decodedToken?._uuid}`, {
+          withCredentials: true,
+        })).data;
+        localStorage.removeItem('token');
+        localStorage.setItem('token', newToken);
+        request.headers.Authorization = newToken;
+      } catch (err: any) {
+        if (err.response.data.error.name === 'TokenExpiredError') {
+          localStorage.removeItem('token');
+          redirect('/sing-up');
+        }
+      }
     }
   }
   return request;

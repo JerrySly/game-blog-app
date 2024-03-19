@@ -15,17 +15,19 @@ import post from '../../../api/post';
 import { Article } from '../../../store/articles/types';
 import {AiFillDelete} from 'react-icons/ai';
 import * as _ from 'lodash';
+import { useAppSelector } from 'hooks/custom-redux';
 
 const Size = Quill.import('attributors/style/size');
 Size.whitelist = ['14px', '16px', '18px', '20px', '24px', '30px'];
 Quill.register(Size, true);
 
 type ArticleCreateModel = {
-  mainPicture: string;
+  photo: string;
   startText: string;
-  mainText: string;
+  text: string;
   title: string;
   uuid: string,
+  createdBy: string,
 }
 
 Quill.register('modules/imageUploader', ImageUploader)
@@ -74,6 +76,7 @@ export const ArticleCreate = () => {
   const [files, setFiles] = useState<Array<File>>([]);
   const [editModel, setEditModel] = useState<Article | null>(null);
 
+  const userUuid = useAppSelector(state => state.auth.userInfo?.uuid);
 
   const formats = [
     'header',
@@ -94,7 +97,7 @@ export const ArticleCreate = () => {
   const initEditData = (model: Article) => {
     setStartText(model?.startText ?? '');
     setTitle(model?.title ?? '');
-    setMainText(model?.mainText ?? '');
+    setMainText(model?.text ?? '');
   }
 
   useEffect(() => {
@@ -132,20 +135,22 @@ export const ArticleCreate = () => {
   const saveArticle = async () => {
     if (!editModel) {
       const model: ArticleCreateModel = {
-        mainPicture: files?.[0]?.name ?? '',
-        mainText,
+        photo: files?.[0]?.name ?? '',
+        text: mainText,
         startText,
         title,
         uuid: prevUuid,
+        createdBy: userUuid ?? ''
       }
       const result = (await axiosInstance.post('/post', model)).data;
       saveFiles(result.id)
       clearForm();
+      prevUuid = v4();
     } else {
       const model: Article = {
         ...editModel,
-        mainPicture: files?.[0]?.name ?? '',
-        mainText,
+        photo: files?.[0]?.name ?? '',
+        text: mainText,
         startText,
         title,
       }
@@ -165,7 +170,7 @@ export const ArticleCreate = () => {
       const copy = _.cloneDeep({
         ...editModel,
       });
-      copy.mainPicture = '';
+      copy.photo = '';
       setEditModel(copy as Article); // проблема с изображением, надо его как-то обнулять
     } else {
       setFiles(files.filter(x => x.name !== imgObject.name));
@@ -174,7 +179,7 @@ export const ArticleCreate = () => {
   const ImgBlock = (imgObject: string | File) => {
     return (<>
       { typeof imgObject === 'string'
-      ?  <img  src={`${process.env.REACT_APP_IMG_PATH}/${editModel?.uuid}-${editModel?.mainPicture}`} />
+      ?  <img  src={`${process.env.REACT_APP_IMG_PATH}/${editModel?.uuid}-${editModel?.photo}`} />
       : <img src={URL.createObjectURL(imgObject)} alt="" />
       }
       <div className='img-actions'>
@@ -198,14 +203,14 @@ export const ArticleCreate = () => {
         ></TextField>
         <div className="create__main-img">
           <h2>Load main img</h2>
-          {!editModel?.mainPicture 
+          {!editModel?.photo 
           ?  files.map((x, index) => <div 
             key={index}
             className='img-block'
           > {ImgBlock(x)}
           </div>)
           : <div className='img-block'>
-            {ImgBlock(editModel.mainPicture)}
+            {ImgBlock(editModel.photo)}
             </div>}
           <Button
             component="label"

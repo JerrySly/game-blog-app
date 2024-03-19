@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
         element: <SingUp />
       },
       { 
-        path: 'article/:id',
+        path: 'article/:uuid',
         element: <Article />
       },
       {

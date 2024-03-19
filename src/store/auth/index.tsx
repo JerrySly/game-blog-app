@@ -23,6 +23,7 @@ interface AuthReducer extends SliceCaseReducers<AuthState> {
   }, type: string}) => void
   setRefreshToken: (state: AuthState, action: {payload: any, type:string})=>void,
   setInfoFromToken: (state: AuthState, action: PayloadAction<string | null | undefined>)=>void,
+  logout: (state: AuthState, action: PayloadAction<undefined>) => void,
 }
 
 const parseJWT = (token: string) => {
@@ -42,6 +43,10 @@ export const authSlice = createSlice<AuthState, AuthReducer, "auth">({
   reducers: {
     setToken: (state, action) => {
       state.token = action.payload;
+    },
+    logout: (state, action: PayloadAction<undefined>) => {
+      state.token = null;
+      state.userInfo = null;
     },
     setRefreshToken: (state, action) => {
       state.refreshToken = action.payload
@@ -66,6 +71,7 @@ export const authSlice = createSlice<AuthState, AuthReducer, "auth">({
           _role: string,
           _uuid: string,
         };
+        console.log('Parsed token', info);
         state.userInfo = {
           nickname: info._name,
           role: info._role,

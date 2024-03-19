@@ -25,10 +25,12 @@ export const CommentList = (props: CommentListProps) => {
 
     const getNextPage = () => {
         console.log('here', page);
-        getCommentsList(page, amount, props.articleUuid).then(x => {
-            const newAdding = x.data.data.rows;
-            setList([...list, ...newAdding]);
-            setPage(page + 1);
+        getCommentsList(page, amount, props.articleUuid).then(comments => {
+            if (comments.data) {
+                const newAdding = comments.data.data.rows;
+                setList([...list, ...newAdding]);
+                setPage(page + 1);
+            }
         })
         
     }

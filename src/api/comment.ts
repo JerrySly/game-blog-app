@@ -2,7 +2,7 @@ import axiosInstance from "../utils/axios"
 
 const getCommentsList = async (pageNumber: Number, amount: Number, articleUuid: string) => {
     console.log(pageNumber, 'number');
-    const data = await (axiosInstance.get('/comment', {
+    const data = await (axiosInstance.get(`/comment/${articleUuid}`, {
         params: {
             pageNumber,
             amount,

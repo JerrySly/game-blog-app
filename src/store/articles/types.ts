@@ -1,11 +1,12 @@
 export type Article = {
   title: string,
-  mainText: string,
-  mainPicture: string,
+  text: string,
+  photo: string,
   author: Author,
   date: Date,
   id: string,
   uuid: string,
+  createdBy: string,
   startText: string,
   isHidden: boolean,
 }
