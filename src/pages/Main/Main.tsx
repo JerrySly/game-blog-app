@@ -16,6 +16,7 @@ export const Main = () => {
   const pageAmount = useAppSelector(state => state.article.pageAmount);
   const articlesIsLoaded = useAppSelector(state => state.article.isLoaded);
 
+  
   const loadNewPage = () => {
     if (!articlesIsLoaded) {
       loadPosts(page, pageAmount).then(data => {

@@ -92,8 +92,8 @@ export const SingUp = () => {
     navigate('/');
   }
 
-  
-  if (auth?.uuid) {
+  console.log('AUTH INFO', auth);
+  if (localStorage.getItem('token')) {
     return <Navigate  to={'/'}/>
   }
   return (

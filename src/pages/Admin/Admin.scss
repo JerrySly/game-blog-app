@@ -8,7 +8,8 @@
     max-width: 200px;
     // border-right: 2px solid $bp-content-dark;
     overflow-y: auto;
-    height: 100vh;
+    height: inherit;
+    min-height: 100vh;
     background-color: $bp-back;
     box-shadow: 1px -1px 3px $bp-content-dark;
   }

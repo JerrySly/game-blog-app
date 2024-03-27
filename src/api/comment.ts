@@ -12,11 +12,12 @@ const getCommentsList = async (pageNumber: Number, amount: Number, articleUuid: 
     return data;
 }
 
-const sendComment = async (text: String, articleUuid: String, creater: String) => {
-    await axiosInstance.post('comment/', {
+const sendComment = async (text: String, articleUuid: String, creater: String, parrent?: string) => {
+    console.log('API', text, creater);
+    await axiosInstance.post(`comment/${articleUuid}`, {
         text,
-        articleUuid,
-        creater,
+        createdBy: creater,
+        parrent,
       });
 }
 

@@ -95,6 +95,7 @@ export const ArticleCreate = () => {
   const location = useLocation();
 
   const initEditData = (model: Article) => {
+    console.log('EDIT MODEL', model);
     setStartText(model?.startText ?? '');
     setTitle(model?.title ?? '');
     setMainText(model?.text ?? '');
@@ -111,7 +112,8 @@ export const ArticleCreate = () => {
     }
   }, []);
 
-  const saveFiles = (id: string) => {
+  const saveFiles = () => {
+    console.log(files);
     if (!files || !files?.length) return;
     const formData = new FormData();
     if (files.length === 1)  {
@@ -130,6 +132,9 @@ export const ArticleCreate = () => {
     const names = Array.from(files).map(x => x.name);
     const filteredNewFiles = Array.from(newFiles).filter(x => !names.includes(x.name));
     setFiles([...files, ...filteredNewFiles]);
+    if (editModel) {
+      saveFiles()
+    }
   }
 
   const saveArticle = async () => {
@@ -143,20 +148,18 @@ export const ArticleCreate = () => {
         createdBy: userUuid ?? ''
       }
       const result = (await axiosInstance.post('/post', model)).data;
-      saveFiles(result.id)
+      saveFiles()
       clearForm();
       prevUuid = v4();
     } else {
       const model: Article = {
         ...editModel,
-        photo: files?.[0]?.name ?? '',
+        photo: (files?.[0]?.name || editModel.photo) ?? '',
         text: mainText,
         startText,
         title,
       }
-      if (files?.[0]) saveFiles(editModel.id);
-      const result = (await axiosInstance.put(`/post/${editModel.uuid}`, model)).data;
-
+      const result = (await axiosInstance.put(`/post`, model)).data;
     }
   }
   const clearForm = () => {

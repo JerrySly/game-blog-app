@@ -42,14 +42,15 @@ export const Article = (props: CommonProps) => {
         <h2 className="article__title">{article?.title}</h2>
         <div className="article__text" dangerouslySetInnerHTML={{__html: article?.text ?? ''}} />
         <Divider light />
-        {
-            userIsAuth && article ?  <CommentInput articleUuid={article?.uuid}/>
-            : <div className="article__comments-warning">
-                <div>You need to login to send comments</div>
-                <Button variant="contained" onClick={() => toLogIn()}>LogIn</Button>
-            </div>
-        }
-        { article ? <CommentList articleUuid={article?.uuid}/> : null }
-        
+        <div className="article__comments">
+            {
+                userIsAuth && article ?  <CommentInput articleUuid={article?.uuid}/>
+                : <div className="article__comments-warning">
+                    <div>You need to login to send comments</div>
+                    <Button variant="contained" onClick={() => toLogIn()}>LogIn</Button>
+                </div>
+            }
+            { article ? <CommentList articleUuid={article?.uuid}/> : null }
+        </div>
     </div>
 }
