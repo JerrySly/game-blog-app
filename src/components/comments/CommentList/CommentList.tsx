@@ -18,13 +18,15 @@ export const CommentList = (props: CommentListProps) => {
 
     const getNextPage = () => {
         console.log('here', page);
-        getCommentsList(page, amount, props.articleUuid).then(comments => {
-            if (comments.data) {
-                const newAdding = comments.data.rows;
-                setList([...list, ...newAdding]);
-                setPage(page + 1);
-            }
-        })
+        if (list.length % amount === 0) {
+            getCommentsList(page, amount, props.articleUuid).then(comments => {
+                if (comments.data) {
+                    const newAdding = comments.data.rows;
+                    setList([...list, ...newAdding]);
+                    setPage(page + 1);
+                }
+            })
+        }
         
     }
     useEffect(() => {
@@ -38,7 +40,7 @@ export const CommentList = (props: CommentListProps) => {
         {
             // навести марафет, сделать нормальные на вид комменты
             list.map(item => 
-                <CommentItem key={item.createdAt.toString()} comment={item}></CommentItem>
+                <CommentItem key={item.createdAt.toString()} comment={item} articleUuid={props.articleUuid}></CommentItem>
             )
         }
         <div ref={scrollBlock} id="intersect-obj-comments"/>

@@ -8,4 +8,11 @@
         flex-direction: column;
         gap: 10px;
     }
+    @media (max-width: 600px) {
+        flex-direction: column;
+        gap: 5px;
+        textarea {
+            width: calc(100% - 25px);
+        }
+    }
 }

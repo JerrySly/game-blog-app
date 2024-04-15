@@ -4,8 +4,7 @@ import axiosInstance from "../../utils/axios";
 import { useNavigate, useParams } from "react-router";
 import { Article as ArticleType } from "../../store/articles/types";
 import "./Article.scss";
-import { Breadcrumbs, Button, Divider, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Button, Divider} from "@mui/material";
 import { CommentInput } from "../../components/comments/CommentInput/CommentInput";
 import { useAppSelector } from "../../hooks/custom-redux";
 import { CommentList } from "../../components/comments/CommentList/CommentList";
@@ -27,14 +26,6 @@ export const Article = (props: CommonProps) => {
         navigator('/sing-up');
     }
     return <div className="article__page-wrapper">
-        <Breadcrumbs  className="article__breadcrumbs">
-            <Link style={{
-                textDecoration: 'none',
-            }} to={'/'}>Articles List</Link>
-            <Typography style={{
-                fontSize: '25px',
-            }} >{article?.title}</Typography>
-        </Breadcrumbs>
         { article ? 
             <img src={`${process.env.REACT_APP_IMG_PATH}/${uuid}-${article?.photo}`} alt="" className="article__img" />
             : null

@@ -17,11 +17,23 @@ const sendComment = async (text: String, articleUuid: String, creater: String, p
     await axiosInstance.post(`comment/${articleUuid}`, {
         text,
         createdBy: creater,
-        parrent,
-      });
+        parrent
+    });
+    
+}
+
+const getChilrenComments = async (pageNumber: Number, amount: Number, articleUuid: string, parrentUuid: string) => {
+  const data = (await axiosInstance.get(`comment/${articleUuid}/child/${parrentUuid}`, {
+    params: {
+      pageNumber,
+      amount,
+    }
+  })).data;
+  return data;
 }
 
 export {
     getCommentsList,
     sendComment,
+    getChilrenComments
 }

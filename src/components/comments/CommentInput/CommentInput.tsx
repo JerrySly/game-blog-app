@@ -9,6 +9,8 @@ import { sendComment } from '../../../api/comment';
 
 interface CommentInputProps {
   articleUuid: string,
+  parentComment?: string,
+  onSend?: Function,
 }
 
 export const CommentInput = (props: CommentInputProps) => {
@@ -22,7 +24,10 @@ export const CommentInput = (props: CommentInputProps) => {
   }
 
   const postComment = () => {
-    if (comment && user) sendComment(comment, props.articleUuid , user.uuid);
+    if (comment && user) sendComment(comment, props.articleUuid , user.uuid, props.parentComment);
+    if (props.onSend) {
+      props.onSend(comment);
+    }
     clear();
   }
 

@@ -6,12 +6,41 @@
     margin-top: 12px;
     border: 1px solid $bp-content-light;
     &__author {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
         // border-bottom: 1px solid gray;
-        padding-bottom: 10px;
+        color: $bp-content-light;
+        margin-bottom: 6px;
     }
     &__text {
-        padding-top: 10px;
+    }
+    &__actions {
+        text-align: right;
+        margin-top: 8px;
+    }
+    &__answer {
+        height: 30px;
+    }
+    &__input {
+        margin-top: 5px;
+        position: relative;
+        padding: 8px 20px;
+        padding-top: 25px;
+        border: 1px solid $bp-content-dark;
+        border-radius: 8px;
+        background-color: rgba(128, 128, 128, 0.339);
+    }
+    &__close {
+        position: absolute;
+        cursor: pointer;
+        right: 20px;
+        top: 5px;
+    }
+    &__children {
+        margin-left: 30px;
+    }
+    &__next {
+        margin-left: 30px !important;
+        width: calc(100% - 30px);
     }
 }
